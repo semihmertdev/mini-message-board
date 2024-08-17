@@ -1,63 +1,63 @@
 # Mini Message Board
 
-Mini Message board is a simple application that allows users to add and view messages. It is built using Express.js and EJS.
+A simple message board application built with Express and PostgreSQL. Users can add, edit, and delete messages, as well as view detailed information about each message.
 
 ## Features
 
-- View Messages: Display a list of existing messages on the homepage.
-- Add Message: Add new messages through a form.
-- Message Details: View detailed information about a specific message.
-- Edit and Delete: Edit or delete existing messages.
+- **View Messages**: Display a list of all messages.
+- **Add New Message**: Submit a new message with a name and text.
+- **Edit Message**: Modify an existing message.
+- **Delete Message**: Remove a message from the board.
+- **Message Details**: View details of a specific message.
+
+## Technologies
+
+- **Backend**: Express.js
+- **Database**: PostgreSQL
+- **Templating Engine**: EJS
+- **Environment Variables**: dotenv
 
 ## Installation
-
-### Prerequisites
-
-- [Node.js](https://nodejs.org/) (v16 or newer)
-
-### Steps
 
 1. **Clone the Repository**
 
    ```bash
-   git clone https://github.com/username/repository.git
-   cd repository
-   ```
+   git clone <repository-url>
+   cd <project-directory>
+    ```
 
 2. **Install Dependencies**
-    
+
     ```bash
     npm install
     ```
 
-3. **Start the Application**
+3. **Set Up Environment Variables***
+Create a .env file in the root directory and add your PostgreSQL connection string:
+
+    ```bash
+    DATABASE_URL=your_postgresql_connection_string
+    ```
+
+4. **Initialize the Database**
+Run the following command to set up the database schema and insert initial data:
+
+    ```bash
+    node init_db.js
+    ```
+
+5. **Start the Server**
 
     ```bash
     npm start
     ```
 
-4. **Open the Application**
-
- Navigate to http://localhost:3000 in your browser to access the application.
+    The server will be running at http://localhost:3000.
 
 ## Usage
 
-- **Homepage**: `GET /` - List all current messages.
-- **Add New Message**: `GET /new `- Display the form to add a new message.
-- **Message Details**: `GET /message/:id` - View details of a specific message.
-- **Edit Message**: `GET /edit/:id` - Display the form to edit a specific message.
-- **Delete Message**: `POST /delete/:id` - Delete a specific message.
-
-## File Structure
-
-project-root/
-├── public/
-│   └── styles.css
-├── views/
-│   ├── index.ejs
-│   ├── form.ejs
-│   ├── message.ejs
-│   └── edit.ejs
-├── app.js
-├── package.json
-└── README.md
+- Navigate to the root URL to see the list of messages.
+- Use the "New Message" button to add a new message.
+- Click "Edit" to modify an existing message.
+- Click "Delete" to remove a message.
+- Click "Open" to view message details.
