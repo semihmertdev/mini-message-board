@@ -10,14 +10,24 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.urlencoded({ extended: true }));
 
 app.get('/', async (req, res) => {
-    try {
-        const result = await pool.query('SELECT * FROM messages');
-        res.render('index', { messages: result.rows });
-    } catch (error) {
-        console.error('Database query failed:', error);
-        res.status(500).send('Database query failed.');
-    }
+  try {
+    const result = await pool.query('SELECT * FROM messages');
+    const messages = result.rows;
+
+    // Debug log
+    console.log('Rendering index page with title:', 'Mini Message Board');
+
+    res.render('index', {
+      title: 'Mini Message Board',
+      messages: messages
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Internal Server Error');
+  }
 });
+
+
 
 app.get('/new', (req, res) => {
     res.render('form');
