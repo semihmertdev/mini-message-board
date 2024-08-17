@@ -11,14 +11,15 @@ app.use(express.urlencoded({ extended: true }));
 
 // Retrieve all messages
 app.get('/', async (req, res) => {
-    try {
-        const result = await pool.query('SELECT * FROM messages ORDER BY added DESC');
-        res.render('index', { title: 'Mini Messageboard', messages: result.rows });
-    } catch (err) {
-        console.error(err);
-        res.sendStatus(500);
-    }
+  try {
+      const result = await pool.query('SELECT * FROM messages');
+      res.render('index', { messages: result.rows });
+  } catch (error) {
+      console.error('Database query failed:', error);
+      res.status(500).send('Database query failed.');
+  }
 });
+
 
 // Display form to add new message
 app.get('/new', (req, res) => {
