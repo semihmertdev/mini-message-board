@@ -8,22 +8,22 @@
   <div class="container">
     <h1>Mini Message Board</h1>
     <ul>
-      <% messages.forEach((message, index) => { %>
+      <% messages.forEach(message => { %>
         <li>
           <div class="message-info">
             <strong><%= message.user %>:</strong> <%= message.text %> 
             <em>(<%= message.added.toLocaleString() %>)</em>
           </div>
           <div class="message-actions">
-            <a href="/message/<%= index %>">Open</a>
-            <a href="/edit/<%= index %>">Edit</a>
-            <form method="POST" action="/delete/<%= index %>">
+            <a href="/message/<%= message.id %>">Open</a>
+            <a href="/edit/<%= message.id %>">Edit</a>
+            <form method="POST" action="/delete/<%= message.id %>">
               <button type="submit">Delete</button>
             </form>
           </div>
         </li>
       <% }) %>
-    </ul>
+    </ul>    
     <a class="btn-primary" href="/new">New Message</a>
   </div>
 </body>
