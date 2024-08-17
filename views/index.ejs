@@ -5,14 +5,26 @@
   <link rel="stylesheet" type="text/css" href="/styles.css">
 </head>
 <body>
-  <h1><%= title %></h1>
-  <ul>
-    <% messages.forEach(function(message) { %>
-      <li>
-        <strong><%= message.user %></strong>: <%= message.text %> (Added: <%= message.added.toDateString() %>)
-      </li>
-    <% }); %>
-  </ul>
-  <a href="/new">Add New Message</a>
+  <div class="container">
+    <h1>Mini Message Board</h1>
+    <ul>
+      <% messages.forEach((message, index) => { %>
+        <li>
+          <div class="message-info">
+            <strong><%= message.user %>:</strong> <%= message.text %> 
+            <em>(<%= message.added.toLocaleString() %>)</em>
+          </div>
+          <div class="message-actions">
+            <a href="/message/<%= index %>">Open</a>
+            <a href="/edit/<%= index %>">Edit</a>
+            <form method="POST" action="/delete/<%= index %>">
+              <button type="submit">Delete</button>
+            </form>
+          </div>
+        </li>
+      <% }) %>
+    </ul>
+    <a class="btn-primary" href="/new">New Message</a>
+  </div>
 </body>
 </html>

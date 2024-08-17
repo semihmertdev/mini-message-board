@@ -1,22 +1,67 @@
 const express = require('express');
-const app = express();
-const pool = require('./db'); // Adjust path to where you initialize your pool
+const router = express.Router();
 
-app.set('view engine', 'ejs');
-app.set('views', './views'); // Adjust path if necessary
+const messages = [
+  {
+    text: "Hi there!",
+    user: "Amando",
+    added: new Date()
+  },
+  {
+    text: "Hello World!",
+    user: "Charles",
+    added: new Date()
+  }
+];
 
-app.get('/', async (req, res) => {
-  try {
-    const result = await pool.query('SELECT * FROM messages');
-    const messages = result.rows;
-    res.render('index', { title: 'Mini Message Board', messages });
-  } catch (err) {
-    console.error(err);
-    res.status(500).send('Internal Server Error');
+router.get('/', (req, res) => {
+  res.render('index', { title: "Mini Message Board", messages: messages });
+});
+
+router.get('/new', (req, res) => {
+  res.render('form', { title: "New Message" });
+});
+
+router.post('/new', (req, res) => {
+  const { messageText, messageUser } = req.body;
+  messages.push({ text: messageText, user: messageUser, added: new Date() });
+  res.redirect('/');
+});
+
+// Edit route
+router.get('/edit/:id', (req, res) => {
+  const messageId = req.params.id;
+  const message = messages[messageId];
+  if (message) {
+    res.render('edit', { title: "Edit Message", message: message, id: messageId });
+  } else {
+    res.redirect('/');
   }
 });
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+router.post('/edit/:id', (req, res) => {
+  const messageId = req.params.id;
+  const { messageText, messageUser } = req.body;
+  messages[messageId] = { text: messageText, user: messageUser, added: new Date() };
+  res.redirect('/');
 });
+
+// Delete route
+router.post('/delete/:id', (req, res) => {
+  const messageId = req.params.id;
+  messages.splice(messageId, 1);
+  res.redirect('/');
+});
+
+// Message details route
+router.get('/message/:id', (req, res) => {
+  const messageId = req.params.id;
+  const message = messages[messageId];
+  if (message) {
+    res.render('message', { title: "Message Details", message: message });
+  } else {
+    res.redirect('/');
+  }
+});
+
+module.exports = router;
